@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
-const connexionDB = require("./db/db");
+const connexionDB = require("./src/db/db");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const errorHandler = require("./src/middleware/errorHandler");
 
-const userRoutes = require("./routes/userRoutes");
+const userRoutes = require("./src/routes/userRoutes");
 
 dotenv.config();
 connexionDB();
@@ -17,6 +18,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+
+app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("Le seurveur tourne sous http://localhost:3000");

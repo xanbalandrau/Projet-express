@@ -1,9 +1,11 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 
 exports.createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
+  const errors = validationResult(req);
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -11,6 +13,11 @@ exports.createUser = async (req, res) => {
         .status(400)
         .json({ message: "L'email est déjà attribué à un utilisateur" });
     }
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const newUser = new User({ name, email, password, role });
     await newUser.save();
 

@@ -162,7 +162,7 @@ Voici le résultat dans le header :
 
 ## Exercice 9
 
-Création d'un middleware pour le rôle admin un dossier middleware et ajout du role admin dans le model User.
+Création d'un middleware pour le rôle admin dans le dossier middleware et ajout du role admin dans le model User.
 
 On met le middleware sur la route pour recupérer les utilisateurs.
 
@@ -210,3 +210,43 @@ Voici le résultat:
 ```
 
 ## Exercice 10
+
+`npm i express-validator`
+
+Création d'un middelware pour valider name, email et mot de passe lors de l'enregistrement.
+
+On test avec Postman:
+
+POST : http://localhost:3000/api/users/register
+
+Voici le résultat lorsqu'on ne respecte pas les conditions :
+
+```
+{
+    "errors": [
+        {
+            "type": "field",
+            "value": "a",
+            "msg": "Le nom doit avoir au moins 3 caractères",
+            "path": "name",
+            "location": "body"
+        },
+        {
+            "type": "field",
+            "value": "armegmail.com",
+            "msg": "Veuillez fournir une adresse email valide",
+            "path": "email",
+            "location": "body"
+        },
+        {
+            "type": "field",
+            "value": "armen",
+            "msg": "Le mot de passe doit avoir au moins 8 caractères",
+            "path": "password",
+            "location": "body"
+        }
+    ]
+}
+```
+
+Puis création d'un middelware de gestion globale des erreurs.
